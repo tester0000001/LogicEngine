@@ -1,0 +1,17 @@
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/exception/ExpressionEvaluationException.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/ComparisonExpressionNode.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/controller/EvaluateController.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/EvaluationContext.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/ExpressionEvaluator.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/Tokenizer.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/VariableNode.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/Token.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/model/Expression.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/ValueNode.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/LogicEngineApplication.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/ExpressionNode.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/TokenType.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/LogicalExpressionNode.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/service/ExpressionParser.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/repository/ExpressionRepository.java
+/workspaces/LogicEngine/src/main/java/LogicEngine/eng/controller/ExpressionController.java
