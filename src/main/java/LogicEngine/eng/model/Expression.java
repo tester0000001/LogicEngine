@@ -1,4 +1,3 @@
-
 package LogicEngine.eng.model;
 
 import jakarta.persistence.*;
@@ -12,6 +11,8 @@ public class Expression {
     private Long id;
 
     private String name;
+
+    @Column(name = "`value`")  // Escaping the keyword
     private String value;
 
     public Expression() {}

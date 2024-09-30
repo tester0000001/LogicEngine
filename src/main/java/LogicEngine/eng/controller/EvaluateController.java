@@ -19,19 +19,21 @@ public class EvaluateController {
 
     @PostMapping
     public ResponseEntity<?> evaluateExpression(
-            @RequestParam Long expressionId,
-            @RequestBody Object data) {
-
+            @RequestBody EvaluateRequest request) {
+    
+        Long expressionId = request.getExpressionId();
+        Object data = request.getData();
+    
         Expression expression = expressionRepository.findById(expressionId)
                 .orElseThrow(() -> new RuntimeException("Expression not found with ID: " + expressionId));
-
+    
         boolean result;
         try {
             result = expressionEvaluator.evaluate(expression.getValue(), data);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
-
+    
         return ResponseEntity.ok(new EvaluateResponse(result));
     }
 
@@ -61,5 +63,16 @@ public class EvaluateController {
         public void setError(String error) {
             this.error = error;
         }
+    }
+
+    public static class EvaluateRequest {
+        private Long expressionId;
+        private Object data;
+    
+        public Long getExpressionId() { return expressionId; }
+        public void setExpressionId(Long expressionId) { this.expressionId = expressionId; }
+    
+        public Object getData() { return data; }
+        public void setData(Object data) { this.data = data; }
     }
 }
