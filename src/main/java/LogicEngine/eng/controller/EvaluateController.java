@@ -1,9 +1,11 @@
 package LogicEngine.eng.controller;
 
+import LogicEngine.eng.dto.EvaluateRequestDTO;
+import LogicEngine.eng.dto.EvaluateResponseDTO;
+import LogicEngine.eng.dto.ErrorResponseDTO;
 import LogicEngine.eng.model.Expression;
 import LogicEngine.eng.repository.ExpressionRepository;
 import LogicEngine.eng.service.ExpressionEvaluator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,68 +13,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/evaluate")
 public class EvaluateController {
 
-    @Autowired
-    private ExpressionRepository expressionRepository;
+    private final ExpressionRepository expressionRepository;
+    private final ExpressionEvaluator expressionEvaluator;
 
-    @Autowired
-    private ExpressionEvaluator expressionEvaluator;
+    public EvaluateController(ExpressionRepository expressionRepository, ExpressionEvaluator expressionEvaluator) {
+        this.expressionRepository = expressionRepository;
+        this.expressionEvaluator = expressionEvaluator;
+    }
 
     @PostMapping
-    public ResponseEntity<?> evaluateExpression(
-            @RequestBody EvaluateRequest request) {
-    
+    public ResponseEntity<?> evaluateExpression(@RequestBody EvaluateRequestDTO request) {
         Long expressionId = request.getExpressionId();
         Object data = request.getData();
-    
+
         Expression expression = expressionRepository.findById(expressionId)
                 .orElseThrow(() -> new RuntimeException("Expression not found with ID: " + expressionId));
-    
+
         boolean result;
         try {
             result = expressionEvaluator.evaluate(expression.getValue(), data);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
-        }
-    
-        return ResponseEntity.ok(new EvaluateResponse(result));
-    }
-
-    public static class EvaluateResponse {
-        private boolean result;
-
-        public EvaluateResponse(boolean result) {
-            this.result = result;
+            return ResponseEntity.badRequest().body(new ErrorResponseDTO(e.getMessage()));
         }
 
-        public boolean isResult() { return result; }
-
-        public void setResult(boolean result) {
-            this.result = result;
-        }
-    }
-
-    public static class ErrorResponse {
-        private String error;
-
-        public ErrorResponse(String error) {
-            this.error = error;
-        }
-
-        public String getError() { return error; }
-
-        public void setError(String error) {
-            this.error = error;
-        }
-    }
-
-    public static class EvaluateRequest {
-        private Long expressionId;
-        private Object data;
-    
-        public Long getExpressionId() { return expressionId; }
-        public void setExpressionId(Long expressionId) { this.expressionId = expressionId; }
-    
-        public Object getData() { return data; }
-        public void setData(Object data) { this.data = data; }
+        return ResponseEntity.ok(new EvaluateResponseDTO(result));
     }
 }
