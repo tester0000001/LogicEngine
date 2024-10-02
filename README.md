@@ -39,13 +39,14 @@ To build the project, run the following command:
       mvn spring-boot:run
 
 ## Curl examples
-  ### /expression
+  ### Customer example
+  #### /expression
          curl -X POST http://localhost:8080/expression -H "Content-Type: application/json" -d '{
              "name": "Check salary and city for Pero",
              "value": "(customer.firstName == \"Pero\" && customer.salary > 4200) OR (customer.address != null && customer.address.city == \"Varaždin\")"
          }'
 
-   ### /evaluate -true
+   #### /evaluate -true
       curl -X POST http://localhost:8080/evaluate -H "Content-Type: application/json" -d '{
           "expressionId": 1,
           "data": {
@@ -65,7 +66,7 @@ To build the project, run the following command:
       }'
 
 
-### /evaluate -false
+#### /evaluate -false
       curl -X POST http://localhost:8080/evaluate -H "Content-Type: application/json" -d '{
           "expressionId": 1,
           "data": {
@@ -83,3 +84,41 @@ To build the project, run the following command:
               }
           }
       }'
+      
+ ### Product example
+  #### /expression
+         curl -X POST http://localhost:8080/expression -H "Content-Type: application/json" -d '{
+              "name": "Check product eligibility for discount",
+              "value": "(product.price < 100 && product.stock > 0) OR (product.category == \"electronics\" && product.isOnSale == true)"
+          }'
+
+
+   #### /evaluate -true
+      curl -X POST http://localhost:8080/evaluate -H "Content-Type: application/json" -d '{
+            "expressionId": 2,
+            "data": {
+                "product": {
+                    "name": "Wireless Headphones",
+                    "price": 89.99,
+                    "stock": 15,
+                    "category": "electronics",
+                    "isOnSale": true
+                }
+            }
+        }'
+
+
+
+#### /evaluate -false
+    curl -X POST http://localhost:8080/evaluate -H "Content-Type: application/json" -d '{
+        "expressionId": 2,
+        "data": {
+            "product": {
+                "name": "Coffee Maker",
+                "price": 120.00,
+                "stock": 0,
+                "category": "kitchen",
+                "isOnSale": false
+            }
+        }
+    }'
